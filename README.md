@@ -40,11 +40,11 @@ The `CVProfile` TypeScript interface validates each entry's structure. All rende
 
 `src/architecture.ts` defines the interactive hexagonal technology map. All group inventories are visible; selecting a group shows its responsibility. Persistence is selected initially, with deep EF Core knowledge and working familiarity with Dapper explicitly distinguished. Delivery and Observability appear as two static, non-clickable cards at the end of the inventory. The map spans career experience and does not claim every technology ran in a single system. The ports-and-adapters boundary follows [Alistair Cockburn's original description](https://alistair.cockburn.us/hexagonal-architecture).
 
-`metrics` defines four career highlights. Approximately **50 complex production incidents resolved with fixes deployed** is the owner's revised career estimate. The owner describes the >3× agent-assisted pace as a comparison of actual performance across dozens of sprints; this does not claim statistical significance. P&L and storage results appear only in the Timetta work case, with detailed implementation text. No numeric feature/hotfix total is inferred from tenure.
+`metrics` defines eight career highlights, including CV-backed platform scale and coordination figures. Approximately **50 complex production incidents resolved with fixes deployed** is the owner's revised career estimate. The owner describes the >3× agent-assisted pace as a comparison of actual performance across dozens of sprints; this does not claim statistical significance. P&L and storage results appear only in the Timetta work case, with detailed implementation text. No numeric feature/hotfix total is inferred from tenure.
 
 ### Original CV coverage
 
-All 21 work-history bullets are retained in Russian with original wording (line wrapping and PDF headers removed; Angular version generalized at the owner's request), along with the original three-paragraph About section. English content translates those statements. Work appears under all four employers, with eight selected cases across Timetta, Arcadia, VDOM BOX International, and Arview.
+All 21 work-history bullets are retained in Russian with original wording (line wrapping and PDF headers removed; Angular version generalized and Kafka removed from Timetta at the owner's request), along with the original three-paragraph About section. English content translates those statements. Work appears under all four employers, with eight selected cases across Timetta, Arcadia, VDOM BOX International, and Arview.
 
 ### Dependency-engine demo
 
@@ -77,8 +77,14 @@ The header stays sticky for language/theme access. Job lists explicitly render d
 
 ### Extensible SDK code window
 
-The SDK case is third, before financial/resource planning. `demo: 'sdk'` renders `src/components/SdkDemo.tsx`. Sixteen illustrative C# examples in `src/lib/sdkExamples.ts` use `AfterUpsert(ProjectTask current, ProjectTask? previous)`, with a nullable previous value for newly created entities. Example helpers and entity properties illustrate extension scenarios; they are not proprietary production source. The body types, pauses, erases, and loops. Previous/Next pause on a complete example; Play resumes. Animation suspends offscreen and when paused, and reduced-motion preference shows static code with manual navigation. No C# executes in the browser. The financial/resource performance case has no demo window.
+The SDK case is third, before financial/resource planning. `demo: 'sdk'` renders `src/components/SdkDemo.tsx`. Sixteen illustrative C# examples in `src/lib/sdkExamples.ts` use `AfterUpsert(ProjectTask current, ProjectTask? previous)`, with a nullable previous value for newly created entities. Example helpers and entity properties illustrate extension scenarios; they are not proprietary production source. The body types, pauses, erases, and loops. Previous/Next pause on a complete example; Play resumes. Animation suspends offscreen and when paused, and reduced-motion preference shows static code with manual navigation. No C# executes in the browser. The financial/resource performance case includes an interactive before/after resource-plan storage diagram.
 
 ### C# formatting and preferred contact
 
 All sixteen illustrative hook examples were formatted with CSharpier 1.3.0, using four spaces, LF, and a 64-column print width inside a class wrapper (60 visible columns after removing its indentation). Long conditions are first refactored into named variables. The formatter owns brace placement, argument wrapping, and closing parentheses. Telegram is the primary contact action; email is secondary. The previous contact availability sentence is removed in both languages.
+
+### Resource-plan storage evolution
+
+`ResourcePlanDemo.tsx` compares millions of detailed RPE rows with gzip-compressed draft byte payloads and monthly aggregation on publication. Draft/Publish controls show the two stages; abstract row tiles, month cards, and a workflow explain why storage and reads improve. Approximate 10× storage reduction and minutes-to-seconds reads are combined outcomes, not an isolated gzip benchmark. P&L details separately explain removal of repeated data loads. The owner supplied this draft/publication explanation directly.
+
+Earlier roles now have contextual paragraphs alongside their existing bullets. Arcadia includes React and Angular. Kafka remains in the general toolkit but is removed from Timetta statements. The hero Get in touch / Связаться button opens Telegram; both Telegram actions use the Bootstrap Icons brand SVG under MIT (see LICENSE-bootstrap-icons.txt). Hook examples hold for 1.5 seconds instead of 4.5 seconds.

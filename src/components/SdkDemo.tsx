@@ -37,7 +37,7 @@ export function SdkDemo({lang}:{lang:Lang}) {
         else {setIndex(n=>(n+1)%hookExamples.length);setPhase('typing')}
       } else if(characters<example.body.length)setCharacters(n=>Math.min(example.body.length,n+3))
       else setPhase('holding')
-    },phase==='holding'?4500:phase==='erasing'?18:24)
+    },phase==='holding'?1500:phase==='erasing'?18:24)
     return()=>clearTimeout(timer)
   },[playing,reduced,visible,phase,characters,example.body.length])
   function select(delta:number){const next=(index+delta+hookExamples.length)%hookExamples.length;setIndex(next);setCharacters(hookExamples[next].body.length);setPhase('holding');setPlaying(false)}
