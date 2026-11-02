@@ -31,10 +31,18 @@ The **CV profile** selector is independent of the English/Russian switch. Your c
 
 1. Copy the bilingual content structure from `src/content.ts` into a new file such as `src/cvs/my-next-cv.ts` and export it. Keep the same fields in both languages.
 2. Import that content in `src/profiles.ts`.
-3. Add a `CVProfile` entry to the exported `profiles` array with a unique URL-safe `id`, English/Russian selector labels, initials, page title, descriptions, email, optional Telegram link, visual labels, and toolkit. Point its `content` field at the imported bilingual content.
+3. Add a `CVProfile` entry to the exported `profiles` array with a unique URL-safe `id`, English/Russian selector labels, initials, page title, descriptions, email, optional Telegram link, architecture map, and toolkit. Point its `content` field at the imported bilingual content.
 4. Run `node --test tests/*.test.mjs` and `npm run build`, then push to `main`. The selector lists every registered CV automatically; the shared page needs no edits.
 
 The `CVProfile` TypeScript interface validates each entry's structure. All rendered names, copy, contacts, toolkit, page metadata, and branding come from the selected profile. Profile switching resets case-study filters and expanded details. Browser Back and Forward restore CV selection.
+
+### Architecture map and metrics
+
+`src/architecture.ts` defines the interactive hexagonal technology map. Select a domain, application, or adapter group to show its full technology list and responsibility. Delivery and observability tools sit outside the domain. The map spans career experience and does not claim every technology ran in a single system. The ports-and-adapters boundary follows [Alistair Cockburn's original description](https://alistair.cockburn.us/hexagonal-architecture).
+
+`metrics` and `metricsNote` in each language's content define the highlights and their qualifications. The approximately 110 sprint cycles derive from the supplied Timetta tenure (August 2022–October 2026) and the owner's stated two-week cadence. Production investigations use the owner's average of one per sprint. The owner reports fortnightly feature delivery, hotfixes alongside planned work, and more than 3× improvement in coding pace with agents. These are explicitly qualified estimates and self-reports, not reconstructed delivery logs or a counted number of features/hotfixes.
+
+`public/favicon.svg` is the navigation wordmark adapted for the browser tab. Browser titles and selector labels use the localized CV label without repeating the person's name.
 
 Edit `src/content.ts` for both language versions; edit contacts and profile settings in `src/profiles.ts`. Theme and layout are in `src/index.css`. Browser language and theme choices persist in local storage. The default language is English.
 

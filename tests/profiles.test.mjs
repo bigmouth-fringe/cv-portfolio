@@ -9,7 +9,7 @@ import ts from 'typescript'
 // Compile only the registry and content into an isolated CommonJS directory.
 const directory = mkdtempSync(join(tmpdir(), 'portfolio-tests-'))
 writeFileSync(join(directory, 'package.json'), '{"type":"commonjs"}')
-for (const name of ['content', 'profiles']) {
+for (const name of ['content', 'architecture', 'profiles']) {
   const source = readFileSync(new URL(`../src/${name}.ts`, import.meta.url), 'utf8')
   const { outputText } = ts.transpileModule(source, { compilerOptions: { module: ts.ModuleKind.CommonJS, target: ts.ScriptTarget.ES2022 } })
   writeFileSync(join(directory, `${name}.js`), outputText)

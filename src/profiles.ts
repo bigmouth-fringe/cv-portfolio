@@ -1,4 +1,5 @@
 import { content, type Lang } from './content'
+import { dotnetArchitecture, type ArchitectureModel } from './architecture'
 
 /** Each CV owns its bilingual content, contacts, branding, and toolkit. */
 export interface CVProfile {
@@ -10,7 +11,7 @@ export interface CVProfile {
   email: string
   telegram?: string
   content: Record<Lang, typeof content.en>
-  visual: { technology: string; nodes: [string, string, string]; caption: string }
+  architecture: ArchitectureModel
   toolkit: { label: Record<Lang, string>; skills: string[] }[]
 }
 
@@ -26,7 +27,7 @@ export const profiles: CVProfile[] = [{
   email: 'bigmouthfringe@gmail.com',
   telegram: 'https://t.me/bigmouthfringe',
   content,
-  visual: { technology: '.NET', nodes: ['API', 'DOMAIN', 'DATA'], caption: 'STRUCTURE → LOGIC → SCALE' },
+  architecture: dotnetArchitecture,
   toolkit: [
     { label: { en: 'Backend', ru: 'Backend' }, skills: ['C# / .NET', 'ASP.NET Core', 'EF Core', 'REST / gRPC', 'DDD / CQRS'] },
     { label: { en: 'Data & messaging', ru: 'Данные и сообщения' }, skills: ['PostgreSQL', 'Redis', 'Kafka', 'RabbitMQ', 'MassTransit'] },
