@@ -5,8 +5,8 @@ import type {Lang} from '../content'
 import {hookExamples, hookHeader} from '../lib/sdkExamples'
 
 function Highlight({text}:{text:string}) {
-  return <>{text.split(/("[^"\n]*"|\b(?:public|async|await|if|return|is|not|null|true|new)\b|\b(?:Task|ProjectTask)\b|\b(?:current|previous|automation)\b)/g).map((part,i)=>
-    <span key={i} className={part.startsWith('"')?'code-string':/^(public|async|await|if|return|is|not|null|true|new)$/.test(part)?'code-keyword':/^(Task|ProjectTask)$/.test(part)?'code-type':/^(current|previous|automation)$/.test(part)?'code-variable':undefined}>{part}</span>)}</>
+  return <>{text.split(/("[^"\n]*"|\b(?:public|async|await|if|return|is|not|null|true|new|var|int)\b|\b(?:Task|ProjectTask)\b|\b(?:current|previous|automation)\b)/g).map((part,i)=>
+    <span key={i} className={part.startsWith('"')?'code-string':/^(public|async|await|if|return|is|not|null|true|new|var|int)$/.test(part)?'code-keyword':/^(Task|ProjectTask)$/.test(part)?'code-type':/^(current|previous|automation)$/.test(part)?'code-variable':undefined}>{part}</span>)}</>
 }
 
 export function SdkDemo({lang}:{lang:Lang}) {

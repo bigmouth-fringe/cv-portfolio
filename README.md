@@ -78,3 +78,7 @@ The header stays sticky for language/theme access. Job lists explicitly render d
 ### Extensible SDK code window
 
 The SDK case is third, before financial/resource planning. `demo: 'sdk'` renders `src/components/SdkDemo.tsx`. Sixteen illustrative C# examples in `src/lib/sdkExamples.ts` use `AfterUpsert(ProjectTask current, ProjectTask? previous)`, with a nullable previous value for newly created entities. Example helpers and entity properties illustrate extension scenarios; they are not proprietary production source. The body types, pauses, erases, and loops. Previous/Next pause on a complete example; Play resumes. Animation suspends offscreen and when paused, and reduced-motion preference shows static code with manual navigation. No C# executes in the browser. The financial/resource performance case has no demo window.
+
+### C# formatting and preferred contact
+
+All sixteen illustrative hook examples were formatted with CSharpier 1.3.0, using four spaces, LF, and a 64-column print width inside a class wrapper (60 visible columns after removing its indentation). Long conditions are first refactored into named variables. The formatter owns brace placement, argument wrapping, and closing parentheses. Telegram is the primary contact action; email is secondary. The previous contact availability sentence is removed in both languages.
