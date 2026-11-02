@@ -40,7 +40,22 @@ The `CVProfile` TypeScript interface validates each entry's structure. All rende
 
 `src/architecture.ts` defines the interactive hexagonal technology map. Select a domain, application, or adapter group to show its full technology list and responsibility. Delivery and observability tools sit outside the domain. The map spans career experience and does not claim every technology ran in a single system. The ports-and-adapters boundary follows [Alistair Cockburn's original description](https://alistair.cockburn.us/hexagonal-architecture).
 
-`metrics` and `metricsNote` in each language's content define the highlights and their qualifications. The approximately 110 sprint cycles derive from the supplied Timetta tenure (August 2022–October 2026) and the owner's stated two-week cadence. Production investigations use the owner's average of one per sprint. The owner reports fortnightly feature delivery, hotfixes alongside planned work, and more than 3× improvement in coding pace with agents. These are explicitly qualified estimates and self-reports, not reconstructed delivery logs or a counted number of features/hotfixes.
+`metrics` and `metricsNote` define the highlights and qualifications. Approximately **50 production investigations across the full career** is the owner's revised estimate. The two-week delivery cadence, parallel hotfix work, P&L speedup, and storage reduction refer to Timetta. The owner reports more than 3× improvement in coding pace with agents. No numeric feature/hotfix total is inferred from tenure.
+
+### Original CV coverage
+
+All 21 work-history bullets are retained in Russian with original wording (line wrapping and PDF headers removed), along with the original three-paragraph About section. English content translates those statements. Work appears under all four employers, with six selected cases across Timetta, Arcadia, VDOM BOX International, and Arview.
+
+### Dependency-engine demo
+
+The first case uses `demo: 'gantt'` to render `src/components/GanttDemo.tsx` beside its description on desktop, and below it on mobile. Other rows can receive demos later without publishing empty windows. The demo is illustrative browser code, not the proprietary production engine.
+
+- Five tasks and all four relationships: FS, SS, FF, SF.
+- Drag bars to move tasks; drag either edge to resize. Arrow keys move a focused bar; Shift+arrow changes duration. Inputs provide a second way to edit dates and duration.
+- Drag the grid, use week arrows, or Shift+wheel/trackpad horizontal scroll to pan an unbounded, virtualized day axis. Zoom, Fit, and Reset controls are available.
+- Select a dependency in the legend, then edit its type or signed day lag.
+- `src/lib/gantt.ts` evaluates constraints in topological order. It pushes successors forward while retaining slack and rejects cycles, invalid intervals, and unknown task references. Intervals use exclusive finish boundaries: `[start, start + duration)`.
+- Run `node --test tests/*.test.mjs` for dependency semantics, signed lag, cascading changes, slack, validation, and the CV registry tests.
 
 `public/favicon.svg` is the navigation wordmark adapted for the browser tab. Browser titles and selector labels use the localized CV label without repeating the person's name.
 
