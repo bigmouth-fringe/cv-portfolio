@@ -29,7 +29,7 @@ export const profiles: CVProfile[] = [{
   content,
   architecture: dotnetArchitecture,
   toolkit: [
-    { label: { en: 'Backend', ru: 'Backend' }, skills: ['C# / .NET', 'ASP.NET Core', 'EF Core', 'REST / gRPC', 'DDD / CQRS'] },
+    { label: { en: 'Backend', ru: 'Backend' }, skills: ['C# / .NET', 'ASP.NET Core', 'EF Core', 'Dapper', 'LINQ', 'REST / gRPC', 'DDD / CQRS'] },
     { label: { en: 'Data & messaging', ru: 'Данные и сообщения' }, skills: ['PostgreSQL', 'Redis', 'Kafka', 'RabbitMQ', 'MassTransit'] },
     { label: { en: 'Frontend & quality', ru: 'Frontend и качество' }, skills: ['Angular / RxJS', 'TypeScript', 'xUnit / Moq', 'Prometheus / Grafana', 'Git / Kubernetes'] },
   ],

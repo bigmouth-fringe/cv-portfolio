@@ -4,7 +4,7 @@ import type { ArchitectureModel } from '../architecture'
 import { cn } from '../lib/utils'
 
 export function Architecture({ model, lang }: { model: ArchitectureModel; lang: Lang }) {
-  const [selected, setSelected] = useState('domain')
+  const [selected, setSelected] = useState('data')
   const active = model.groups.find(group => group.id === selected) ?? model.groups[0]
   const en = lang === 'en'
   return <figure className="architecture" aria-labelledby="architecture-title">
@@ -21,6 +21,6 @@ export function Architecture({ model, lang }: { model: ArchitectureModel; lang: 
     </div>
     <div className="architecture-detail" id="architecture-detail" aria-live="polite"><div className="architecture-detail-heading"><h3>{active.label[lang]}</h3><span>{active.kind[lang]}</span></div><div className="tags">{active.technologies.map(technology=><span key={technology}>{technology}</span>)}</div><p>{active.description[lang]}</p></div>
     <div className="architecture-engineering"><span>{en ? 'DELIVERY & OBSERVABILITY' : 'ДОСТАВКА И НАБЛЮДАЕМОСТЬ'}</span><p>{model.engineering.join(' · ')}</p></div>
-    <p className="architecture-note">{en ? 'Dependencies point inward. The domain owns the rules.' : 'Зависимости направлены внутрь. Правила принадлежат домену.'}</p>
+    <div className="architecture-inventory">{model.groups.map(group=><button type="button" key={group.id} onClick={()=>setSelected(group.id)} aria-pressed={active.id===group.id}><strong>{group.label[lang]}</strong><span>{group.technologies.join(' · ')}</span></button>)}</div><p className="architecture-note">{en ? 'Dependencies point inward. The domain owns the rules.' : 'Зависимости направлены внутрь. Правила принадлежат домену.'}</p>
   </figure>
 }

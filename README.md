@@ -38,13 +38,13 @@ The `CVProfile` TypeScript interface validates each entry's structure. All rende
 
 ### Architecture map and metrics
 
-`src/architecture.ts` defines the interactive hexagonal technology map. Select a domain, application, or adapter group to show its full technology list and responsibility. Delivery and observability tools sit outside the domain. The map spans career experience and does not claim every technology ran in a single system. The ports-and-adapters boundary follows [Alistair Cockburn's original description](https://alistair.cockburn.us/hexagonal-architecture).
+`src/architecture.ts` defines the interactive hexagonal technology map. All group inventories are visible; selecting a group shows its responsibility. Persistence is selected initially, with deep EF Core knowledge and working familiarity with Dapper explicitly distinguished. Delivery and observability tools sit outside the domain. The map spans career experience and does not claim every technology ran in a single system. The ports-and-adapters boundary follows [Alistair Cockburn's original description](https://alistair.cockburn.us/hexagonal-architecture).
 
-`metrics` and `metricsNote` define the highlights and qualifications. Approximately **50 production investigations across the full career** is the owner's revised estimate. The two-week delivery cadence, parallel hotfix work, P&L speedup, and storage reduction refer to Timetta. The owner reports more than 3× improvement in coding pace with agents. No numeric feature/hotfix total is inferred from tenure.
+`metrics` defines four career highlights. Approximately **50 complex production incidents resolved with fixes deployed** is the owner's revised career estimate. The owner describes the >3× agent-assisted pace as a comparison of actual performance across dozens of sprints; this does not claim statistical significance. P&L and storage results appear only in the Timetta work case, with normalized comparison graphics. No numeric feature/hotfix total is inferred from tenure.
 
 ### Original CV coverage
 
-All 21 work-history bullets are retained in Russian with original wording (line wrapping and PDF headers removed), along with the original three-paragraph About section. English content translates those statements. Work appears under all four employers, with six selected cases across Timetta, Arcadia, VDOM BOX International, and Arview.
+All 21 work-history bullets are retained in Russian with original wording (line wrapping and PDF headers removed; Angular version generalized at the owner's request), along with the original three-paragraph About section. English content translates those statements. Work appears under all four employers, with eight selected cases across Timetta, Arcadia, VDOM BOX International, and Arview.
 
 ### Dependency-engine demo
 
@@ -68,3 +68,9 @@ To add more shadcn components: `npx shadcn@latest add <component>`.
 ## Component attribution
 
 `src/components/ui/button.tsx` and `accordion.tsx` are adapted from shadcn/ui's New York components, released under the MIT license. See `LICENSE-shadcn.txt`.
+
+### Undo/Redo demo and reading controls
+
+The second case uses `demo: 'undo'` with the same Gantt component. Changes capture tasks and links together; a drag is one compound operation. Undo/Redo buttons and scoped Ctrl/Cmd+Z, Ctrl/Cmd+Shift+Z, and Ctrl+Y shortcuts restore complete cascades. New edits clear redo; Reset clears history. Inputs retain native text undo. The browser models operation history, while the case describes the actual server implementation with EF Change Tracker, Redis diffs, concurrent-history invalidation, and SignalR. `tests/history.test.mjs` covers transactional restoration, drag coalescing, branching, and no-op behavior.
+
+The header stays sticky for language/theme access. Job lists explicitly render disc markers. The CV count appears only when multiple profiles exist.

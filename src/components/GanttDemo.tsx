@@ -1,21 +1,24 @@
 import { useEffect, useId, useRef, useState, type PointerEvent } from 'react'
-import { ArrowLeft, ArrowRight, RotateCcw, Minus, Plus, Maximize2 } from 'lucide-react'
+import { ArrowLeft, ArrowRight, RotateCcw, Minus, Plus, Maximize2, Undo2, Redo2 } from 'lucide-react'
 import { Button } from './ui/button'
 import { NativeSelect, NativeSelectOption } from './ui/native-select'
 import type { Lang } from '../content'
 import { dependencyTypes, initialLinks, initialTasks, schedule, type DependencyType, type GanttLink, type GanttTask } from '../lib/gantt'
+
+import { createHistory, commit, undo, redo, type Snapshot } from '../lib/history'
 
 const rowHeight = 43
 const headerHeight = 32
 const colors: Record<DependencyType, string> = { FS: 'var(--dep-fs)', SS: 'var(--dep-ss)', FF: 'var(--dep-ff)', SF: 'var(--dep-sf)' }
 type Drag = { mode: 'move' | 'start' | 'finish' | 'pan'; id?: string; x: number; tasks: GanttTask[]; origin: number }
 
-export function GanttDemo({ lang }: { lang: Lang }) {
+export function GanttDemo({ lang, historyEnabled=false }: { lang: Lang; historyEnabled?: boolean }) {
   const en = lang === 'en'
   const names: Record<string, string> = en ? {model:'Domain model',api:'Backend API',ui:'New UI',tests:'Regression tests',legacy:'Legacy UI'} : {model:'Доменная модель',api:'Backend API',ui:'Новый UI',tests:'Регресс-тесты',legacy:'Старый UI'}
   const explanations: Record<DependencyType,string> = en ? {FS:'Finish → Start: the successor starts after the predecessor finishes.',SS:'Start → Start: the successor cannot start before the predecessor starts.',FF:'Finish → Finish: the successor cannot finish before the predecessor finishes.',SF:'Start → Finish: the successor cannot finish before the predecessor starts.'} : {FS:'Финиш → Старт: следующая задача начинается после завершения предыдущей.',SS:'Старт → Старт: следующая задача не начинается раньше старта предыдущей.',FF:'Финиш → Финиш: следующая задача не заканчивается раньше завершения предыдущей.',SF:'Старт → Финиш: следующая задача не заканчивается раньше старта предыдущей.'}
-  const [tasks,setTasks] = useState(()=>initialTasks.map(task=>({...task})))
-  const [links,setLinks] = useState(()=>initialLinks.map(link=>({...link})))
+  const [history,setHistory] = useState(()=>createHistory({tasks:initialTasks.map(task=>({...task})),links:initialLinks.map(link=>({...link}))}))
+  const {tasks,links}=history.present
+  const dragBaseline=useRef<Snapshot | null>(null)
   const [origin,setOrigin] = useState(-3)
   const [scale,setScale] = useState(28)
   const [width,setWidth] = useState(360)
@@ -50,15 +53,17 @@ export function GanttDemo({ lang }: { lang: Lang }) {
   },[scale])
 
   function apply(nextTasks:GanttTask[],nextLinks=links){
-    try{setTasks(schedule(nextTasks,nextLinks));setLinks(nextLinks);setMessage('')}
+    try{const next={tasks:schedule(nextTasks,nextLinks),links:nextLinks};setHistory(value=>drag.current?{...value,present:next}:commit(value,next));setMessage('')}
     catch{setMessage(en?'That change would create an invalid schedule.':'Изменение создаёт некорректный план.')}
   }
   function updateTask(id:string,patch:Partial<GanttTask>){apply(tasks.map(task=>task.id===id?{...task,...patch}:task))}
   function updateLink(patch:Partial<GanttLink>){apply(tasks,links.map(link=>link.id===linkId?{...link,...patch}:link))}
   function startDrag(event:PointerEvent<SVGElement>,mode:Drag['mode'],id?:string){
     if(event.button!==0)return
+    if(historyEnabled)(event.currentTarget.closest('section') as HTMLElement | null)?.focus({preventScroll:true})
     event.preventDefault();event.stopPropagation()
     if(id)setTaskId(id)
+    dragBaseline.current={tasks,links}
     drag.current={mode,id,x:event.clientX,tasks:tasks.map(task=>({...task})),origin}
     svg.current?.setPointerCapture(event.pointerId)
   }
@@ -75,18 +80,23 @@ export function GanttDemo({ lang }: { lang: Lang }) {
     else {const shift=Math.min(days,task.duration-1);patch={start:task.start+shift,duration:task.duration-shift}}
     apply(current.tasks.map(item=>item.id===task.id?{...item,...patch}:item))
   }
-  function endDrag(event:PointerEvent<SVGSVGElement>){drag.current=null;if(svg.current?.hasPointerCapture(event.pointerId))svg.current.releasePointerCapture(event.pointerId)}
+  function endDrag(event:PointerEvent<SVGSVGElement>){const baseline=dragBaseline.current;if(baseline && drag.current?.mode!=='pan')setHistory(value=>commit(value,value.present,baseline));dragBaseline.current=null;drag.current=null;if(svg.current?.hasPointerCapture(event.pointerId))svg.current.releasePointerCapture(event.pointerId)}
   function fit(){const first=Math.min(...tasks.map(task=>task.start));const last=Math.max(...tasks.map(task=>task.start+task.duration));setOrigin(first-2);setScale(Math.max(12,Math.min(56,width/(last-first+4))))}
   function zoom(factor:number){const next=Math.max(12,Math.min(64,scale*factor));setOrigin(origin+width/(2*scale)-width/(2*next));setScale(next)}
-  function reset(){setTasks(initialTasks.map(task=>({...task})));setLinks(initialLinks.map(link=>({...link})));setOrigin(-3);setScale(Math.max(12,Math.min(34,width/13)));setTaskId('api');setLinkId('fs');setMessage('')}
+  function reset(){setHistory(createHistory({tasks:initialTasks.map(task=>({...task})),links:initialLinks.map(link=>({...link}))}));setOrigin(-3);setScale(Math.max(12,Math.min(34,width/13)));setTaskId('api');setLinkId('fs');setMessage('')}
   const dayStep=scale<18?2:1
   const firstDay=Math.floor(origin/dayStep)*dayStep
   const ticks=Array.from({length:Math.ceil(width/(scale*dayStep))+2},(_,index)=>firstDay+index*dayStep)
   const x=(day:number)=>(day-origin)*scale
   const height=headerHeight+tasks.length*rowHeight
 
-  return <section className="gantt-demo" aria-label={en?'Interactive task dependency demo':'Интерактивное демо зависимостей задач'}>
-    <div className="demo-window-bar"><span className="window-dots" aria-hidden="true"><i/><i/><i/></span><span>{en?'DEPENDENCY PLAYGROUND':'ДЕМО ЗАВИСИМОСТЕЙ'}</span><span className="demo-live">{en?'INTERACTIVE':'ИНТЕРАКТИВ'}</span></div>
+  return <section className="gantt-demo" tabIndex={historyEnabled?0:undefined} onKeyDown={event=>{
+    if(!historyEnabled || !(event.ctrlKey||event.metaKey) || (event.target as HTMLElement).closest('input,textarea,select,[contenteditable="true"]'))return
+    const key=event.key.toLowerCase()
+    if(key==='z'||key==='y'){event.preventDefault();event.stopPropagation();setHistory(key==='y'||event.shiftKey?redo:undo);setMessage('')}
+  }} aria-label={historyEnabled?(en?'Interactive Undo/Redo demo':'Интерактивное демо Undo/Redo'):en?'Interactive task dependency demo':'Интерактивное демо зависимостей задач'}>
+    <div className="demo-window-bar"><span className="window-dots" aria-hidden="true"><i/><i/><i/></span><span>{historyEnabled?'UNDO / REDO':en?'DEPENDENCY PLAYGROUND':'ДЕМО ЗАВИСИМОСТЕЙ'}</span><span className="demo-live">{en?'INTERACTIVE':'ИНТЕРАКТИВ'}</span></div>
+    {historyEnabled && <div className="undo-toolbar"><div><Button size="sm" variant="outline" disabled={!history.past.length} onClick={()=>{setHistory(undo);setMessage('')}}><Undo2 size={14}/>Undo</Button><Button size="sm" variant="outline" disabled={!history.future.length} onClick={()=>{setHistory(redo);setMessage('')}}><Redo2 size={14}/>Redo</Button></div><span aria-live="polite">{en?'Undo':'Отмена'}: {history.past.length} · {en?'Redo':'Повтор'}: {history.future.length}</span><p>{en?'Ctrl/Cmd+Z — Undo · Ctrl/Cmd+Shift+Z or Ctrl+Y — Redo. Click inside this demo first. Each change restores the entire operation, including all dependent tasks.':'Ctrl/Cmd+Z — отменить · Ctrl/Cmd+Shift+Z или Ctrl+Y — повторить. Сначала нажмите внутри демо. Вся операция, включая сдвиг зависимых задач, отменяется целиком.'}</p></div>}
     <div className="gantt-toolbar"><div><Button size="icon" variant="ghost" aria-label={en?'Pan one week left':'На неделю влево'} onClick={()=>setOrigin(origin-7)}><ArrowLeft size={14}/></Button><Button size="icon" variant="ghost" aria-label={en?'Pan one week right':'На неделю вправо'} onClick={()=>setOrigin(origin+7)}><ArrowRight size={14}/></Button><span className="gantt-range">{en?'Days':'Дни'} {Math.floor(origin)}…{Math.ceil(origin+width/scale)}</span></div><div><Button size="icon" variant="ghost" aria-label={en?'Zoom out':'Уменьшить'} onClick={()=>zoom(1/1.3)}><Minus size={14}/></Button><Button size="icon" variant="ghost" aria-label={en?'Zoom in':'Увеличить'} onClick={()=>zoom(1.3)}><Plus size={14}/></Button><Button size="icon" variant="ghost" aria-label={en?'Fit all tasks':'Показать все задачи'} onClick={fit}><Maximize2 size={13}/></Button><Button size="icon" variant="ghost" aria-label={en?'Reset demo':'Сбросить демо'} onClick={reset}><RotateCcw size={13}/></Button></div></div>
     <div className="gantt-chart"><div className="gantt-labels"><div className="gantt-label-header">{en?'TASK / DAY':'ЗАДАЧА / ДЕНЬ'}</div>{tasks.map(task=><button type="button" className={task.id===taskId?'selected':''} key={task.id} onClick={()=>setTaskId(task.id)} style={{height:rowHeight}}>{names[task.id]}</button>)}</div>
       <div ref={timeline} className="gantt-timeline"><svg ref={svg} width="100%" height={height} onPointerDown={event=>startDrag(event,'pan')} onPointerMove={moveDrag} onPointerUp={endDrag} onPointerCancel={endDrag} aria-label={en?'Drag tasks to move, drag their edges to resize, or drag the grid to pan. Focus a task and use arrow keys to move it.':'Перетаскивайте задачи и их края, двигайте сетку. Стрелки перемещают задачу в фокусе.'}>
@@ -118,6 +128,6 @@ export function GanttDemo({ lang }: { lang: Lang }) {
     <div className="gantt-editor"><div className="gantt-task-editor"><strong>{names[taskId]}</strong><label>{en?'Start':'Старт'}<input aria-label={en?'Task start day':'День начала задачи'} type="number" value={activeTask.start} onChange={event=>{if(event.target.value!=='')updateTask(taskId,{start:Number(event.target.value)})}}/></label><label>{en?'Duration':'Длительность'}<input aria-label={en?'Task duration':'Длительность задачи'} type="number" min={1} value={activeTask.duration} onChange={event=>{if(event.target.value!=='')updateTask(taskId,{duration:Math.max(1,Number(event.target.value))})}}/></label></div>
     <div className="gantt-link-editor"><label>{en?'Dependency':'Зависимость'}<NativeSelect aria-label={en?'Dependency type':'Тип зависимости'} value={activeLink.type} onChange={event=>updateLink({type:event.target.value as DependencyType})}>{dependencyTypes.map(type=><NativeSelectOption key={type} value={type}>{type}</NativeSelectOption>)}</NativeSelect></label><label>{en?'Lag (days)':'Лаг (дни)'}<input aria-label={en?'Dependency lag in days':'Лаг зависимости в днях'} type="number" value={activeLink.lag} onChange={event=>{if(event.target.value!=='')updateLink({lag:Number(event.target.value)})}}/></label><p>{explanations[activeLink.type]}</p></div></div>
     <p className="gantt-help">{en?'Drag bars or their edges. Drag the grid, use arrows, or Shift+wheel to pan without limits. Constraints push successors forward and retain slack.':'Двигайте задачи и их края. Сетка, стрелки и Shift+колесо перемещают шкалу без границ. Связи сдвигают задачи вперёд, сохраняя запас времени.'}</p>
-    <p className="demo-disclaimer" aria-live="polite">{message || (en?'Illustrative browser demo; not the original production engine.':'Иллюстративное браузерное демо, не исходный production-движок.')}</p>
+    <p className="demo-disclaimer" aria-live="polite">{message || (historyEnabled?(en?'Browser simulation of compound-operation history. Production implementation: EF Change Tracker → Redis diff → SignalR; concurrent changes invalidate history.':'Браузерная модель истории составных операций. Production-реализация: EF Change Tracker → diff в Redis → SignalR; конкурентные изменения инвалидируют историю.'):(en?'Illustrative browser demo; not the original production engine.':'Иллюстративное браузерное демо, не исходный production-движок.'))}</p>
   </section>
 }
