@@ -9,7 +9,7 @@ export interface ArchitectureGroup {
 }
 export interface ArchitectureModel {
   groups: ArchitectureGroup[]
-  engineering: string[]
+  supportingGroups: { label: Record<Lang, string>; technologies: string[] }[]
 }
 
 export const dotnetArchitecture: ArchitectureModel = {
@@ -18,7 +18,7 @@ export const dotnetArchitecture: ArchitectureModel = {
       id: 'domain', label: { en: 'Domain', ru: 'Домен' },
       kind: { en: 'Business rules', ru: 'Бизнес-правила' },
       description: { en: 'Entities, value objects, and invariants. Business rules stay independent of databases, frameworks, and transport protocols.', ru: 'Сущности, объекты-значения и инварианты. Бизнес-правила независимы от баз данных, фреймворков и протоколов передачи данных.' },
-      technologies: ['C#', '.NET', 'DDD', 'Aggregate Root', 'Value Objects', 'Graph models', 'OOP', 'SOLID'],
+      technologies: ['C#', '.NET', 'DDD', 'Aggregate Root', 'Value Objects', 'OOP', 'SOLID'],
     },
     {
       id: 'application', label: { en: 'Application', ru: 'Приложение' },
@@ -30,31 +30,31 @@ export const dotnetArchitecture: ArchitectureModel = {
       id: 'frontend', label: { en: 'Web UI', ru: 'Веб-интерфейс' },
       kind: { en: 'Driving adapter', ru: 'Входной адаптер' },
       description: { en: 'User interactions enter through application ports. Forms, tables, and reactive workflows belong outside the business core.', ru: 'Действия пользователя поступают через прикладные порты. Формы, таблицы и реактивные сценарии остаются за пределами бизнес-ядра.' },
-      technologies: ['Angular', 'TypeScript', 'RxJS'],
+      technologies: ['Angular', 'React', 'TypeScript', 'RxJS'],
     },
     {
       id: 'api', label: { en: 'API & realtime', ru: 'API и realtime' },
       kind: { en: 'Boundary adapters', ru: 'Адаптеры границы' },
       description: { en: 'HTTP and RPC endpoints translate requests into use cases. Realtime adapters deliver notifications without coupling the domain to transport.', ru: 'HTTP- и RPC-эндпоинты переводят запросы в прикладные сценарии. Realtime-адаптеры доставляют уведомления, не связывая домен с транспортом.' },
-      technologies: ['ASP.NET Core', 'REST API', 'OData', 'gRPC', 'SignalR', 'WebSocket'],
+      technologies: ['ASP.NET Core', 'REST API', 'OData', 'gRPC', 'SignalR'],
     },
     {
       id: 'data', label: { en: 'Persistence', ru: 'Хранение' },
       kind: { en: 'Driven adapters', ru: 'Выходные адаптеры' },
-      description: { en: 'Database and cache adapters implement application-defined contracts. Query plans, indexes, and persistence details stay outside the domain. Deep EF Core knowledge: Change Tracker, query translation, and SQL performance. Working familiarity with Dapper.', ru: 'Адаптеры БД и кеша реализуют прикладные контракты. Планы запросов, индексы и детали хранения остаются за пределами домена. Глубокое знание EF Core: Change Tracker, трансляция запросов и производительность SQL. Dapper — базовое знакомство.' },
-      technologies: ['EF Core', 'PostgreSQL', 'SQL', 'Dapper', 'Npgsql', 'Redis', 'Change Tracker', 'LINQ translation', 'EXPLAIN ANALYZE', 'Indexes & locks'],
+      description: { en: 'Database and cache adapters implement application-defined contracts. Deep EF Core knowledge and SQL performance work; working familiarity with Dapper.', ru: 'Адаптеры БД и кеша реализуют прикладные контракты. Глубокое знание EF Core и оптимизация SQL; Dapper — базовое знакомство.' },
+      technologies: ['EF Core', 'PostgreSQL', 'SQL', 'Dapper', 'Npgsql', 'Redis', 'Indexes & locks'],
     },
     {
       id: 'messaging', label: { en: 'Messaging', ru: 'Сообщения' },
       kind: { en: 'Asynchronous adapters', ru: 'Асинхронные адаптеры' },
-      description: { en: 'Consumers invoke use cases; publishers implement outbound ports. Message contracts, retries, and idempotency protect asynchronous boundaries.', ru: 'Обработчики вызывают прикладные сценарии, а отправители реализуют выходные порты. Контракты сообщений, повторы и идемпотентность защищают асинхронные границы.' },
-      technologies: ['Apache Kafka', 'RabbitMQ', 'MassTransit', 'Idempotency', 'Reprocessing', 'Message contracts'],
+      description: { en: 'Consumers invoke use cases; publishers implement outbound ports. Idempotency protects asynchronous boundaries.', ru: 'Обработчики вызывают прикладные сценарии, а отправители реализуют выходные порты. Идемпотентность защищает асинхронные границы.' },
+      technologies: ['Apache Kafka', 'RabbitMQ', 'MassTransit', 'Idempotency'],
     },
     {
       id: 'integrations', label: { en: 'Integrations', ru: 'Интеграции' },
       kind: { en: 'External & legacy adapters', ru: 'Внешние и legacy-адаптеры' },
       description: { en: 'External APIs and legacy systems connect through adapters. These examples span earlier roles; the map is not a single production deployment.', ru: 'Внешние API и legacy-системы подключаются через адаптеры. Примеры относятся в том числе к предыдущим местам работы; карта не описывает одну production-систему.' },
-      technologies: ['Google Maps', 'Google Calendar', 'PandaDoc', 'Python', 'VBScript'],
+      technologies: ['Google Maps', 'Google Calendar', 'PandaDoc'],
     },
     {
       id: 'testing', label: { en: 'Test harness', ru: 'Тесты' },
@@ -63,5 +63,8 @@ export const dotnetArchitecture: ArchitectureModel = {
       technologies: ['xUnit', 'Moq', 'Selenium', 'Integration tests', 'Performance tests'],
     },
   ],
-  engineering: ['Kubernetes', 'Git', 'Prometheus', 'Grafana', '.NET profiling', 'GC & allocations', 'Code review', 'AI-agent workflows'],
+  supportingGroups: [
+    { label: { en: 'Delivery', ru: 'Доставка' }, technologies: ['Kubernetes', 'Git', 'Code review', 'AI-agent workflows'] },
+    { label: { en: 'Observability', ru: 'Наблюдаемость' }, technologies: ['Prometheus', 'Grafana', '.NET profiling', 'GC & allocations'] },
+  ],
 }
