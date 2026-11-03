@@ -25,7 +25,9 @@ for profile in json.loads(Path('.cv-build/profiles.json').read_text(encoding='ut
         for name in ['Normal', 'Title', 'Subtitle', 'Heading 1', 'Heading 2', 'List Bullet']:
             style = doc.styles[name]; style.font.name = 'DejaVu Sans'
             style.font.color.rgb = RGBColor(0, 0, 0)
-        normal = doc.styles['Normal']; normal.font.size = Pt(10.5)
+            for border in list(style.element.iter(qn('w:pBdr'))):
+                border.getparent().remove(border)
+        normal = doc.styles['Normal']; normal.font.size = Pt(11)
         normal.paragraph_format.space_after = Pt(6)
         normal.paragraph_format.line_spacing = 1.08
         doc.styles['Title'].font.size = Pt(27)
