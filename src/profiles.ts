@@ -7,6 +7,8 @@ export interface CVProfile {
   label: Record<Lang, string>
   initials: string
   pageTitle: string
+  downloadName: string
+  photo?: string
   description: Record<Lang, string>
   email: string
   telegram?: string
@@ -20,6 +22,8 @@ export const profiles: CVProfile[] = [{
   label: { en: 'Senior .NET / Tech Lead', ru: 'Senior .NET / Техлид' },
   initials: 'ar',
   pageTitle: 'Senior .NET',
+  downloadName: 'Alexey_Rudi_Senior_DotNet',
+  photo: 'alexey-rudi.jpg',
   description: {
     en: 'Alexey Rudi — Senior C#/.NET Developer and hands-on Tech Lead. Enterprise systems, complex domain logic, and performance engineering.',
     ru: 'Алексей Руди — Senior C#/.NET-разработчик и hands-on Tech Lead. Enterprise-системы, сложная бизнес-логика и оптимизация производительности.',

@@ -51,10 +51,10 @@ export const dotnetArchitecture: ArchitectureModel = {
       technologies: ['Apache Kafka', 'RabbitMQ', 'MassTransit', 'Idempotency'],
     },
     {
-      id: 'integrations', label: { en: 'Integrations', ru: 'Интеграции' },
+      id: 'integrations', label: { en: 'External systems', ru: 'Внешние системы' },
       kind: { en: 'External & legacy adapters', ru: 'Внешние и legacy-адаптеры' },
-      description: { en: 'External APIs and legacy systems connect through adapters. These examples span earlier roles; the map is not a single production deployment.', ru: 'Внешние API и legacy-системы подключаются через адаптеры. Примеры относятся в том числе к предыдущим местам работы; карта не описывает одну production-систему.' },
-      technologies: ['Google Maps', 'Google Calendar', 'PandaDoc'],
+      description: { en: 'Adapters isolate external APIs and legacy systems. Data synchronization and integration error handling stay outside the domain.', ru: 'Адаптеры изолируют внешние API и legacy-системы. Синхронизация данных и обработка ошибок интеграций остаются за пределами домена.' },
+      technologies: ['API adapters', 'Data synchronization', 'Error handling'],
     },
     {
       id: 'testing', label: { en: 'Test harness', ru: 'Тесты' },
