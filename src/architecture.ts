@@ -60,7 +60,7 @@ export const dotnetArchitecture: ArchitectureModel = {
       id: 'testing', label: { en: 'Test harness', ru: 'Тесты' },
       kind: { en: 'Driving adapter & test doubles', ru: 'Входной адаптер и тестовые двойники' },
       description: { en: 'Tests drive use cases directly and replace infrastructure at its ports. Browser automation exercises the UI boundary; performance tests check behaviour under load.', ru: 'Тесты напрямую вызывают прикладные сценарии и заменяют инфраструктуру на границах портов. Браузерные тесты проверяют UI, а performance-тесты — поведение под нагрузкой.' },
-      technologies: ['xUnit', 'Moq', 'Selenium', 'Integration tests', 'Performance tests'],
+      technologies: ['xUnit', 'NUnit', 'MSTest', 'Moq', 'Selenium', 'Integration tests', 'Performance tests'],
     },
   ],
   supportingGroups: [

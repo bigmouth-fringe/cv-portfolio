@@ -29,9 +29,13 @@ export const profiles: CVProfile[] = [{
   content,
   architecture: dotnetArchitecture,
   toolkit: [
-    { label: { en: 'Backend', ru: 'Backend' }, skills: ['C# / .NET', 'ASP.NET Core', 'EF Core', 'Dapper', 'LINQ', 'REST / gRPC', 'DDD / CQRS'] },
-    { label: { en: 'Data & messaging', ru: 'Данные и сообщения' }, skills: ['PostgreSQL', 'Redis', 'Kafka', 'RabbitMQ', 'MassTransit'] },
-    { label: { en: 'Frontend & quality', ru: 'Frontend и качество' }, skills: ['Angular / RxJS', 'TypeScript', 'xUnit / Moq', 'Prometheus / Grafana', 'Git / Kubernetes'] },
+    { label: { en: 'Backend & API', ru: 'Backend и API' }, skills: ['C#', '.NET', 'ASP.NET Core', 'REST API', 'OData', 'gRPC', 'SignalR', 'LINQ', 'async / await', 'SDK design'] },
+    { label: { en: 'Architecture', ru: 'Архитектура' }, skills: ['OOP', 'SOLID', 'DDD', 'CQRS', 'Aggregate Root', 'Value Objects'] },
+    { label: { en: 'Data & messaging', ru: 'Данные и сообщения' }, skills: ['SQL', 'PostgreSQL', 'EF Core', 'Dapper', 'Npgsql', 'Redis', 'Apache Kafka', 'RabbitMQ', 'MassTransit', 'Idempotency'] },
+    { label: { en: 'Frontend', ru: 'Frontend' }, skills: ['Angular', 'React', 'TypeScript', 'RxJS'] },
+    { label: { en: 'Testing', ru: 'Тестирование' }, skills: ['xUnit', 'NUnit', 'MSTest', 'Moq', 'Selenium', 'Integration tests', 'Performance tests'] },
+    { label: { en: 'Delivery & observability', ru: 'Доставка и наблюдаемость' }, skills: ['Git', 'Kubernetes', 'Prometheus', 'Grafana', '.NET profiling', 'GC & allocations', 'Code review', 'AI-agent workflows'] },
+    { label: { en: 'Integrations', ru: 'Интеграции' }, skills: ['Google Maps', 'Google Calendar', 'PandaDoc'] },
   ],
 }]
 

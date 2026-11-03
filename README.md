@@ -92,3 +92,7 @@ Earlier roles now have contextual paragraphs alongside their existing bullets. A
 ### Metric presentation
 
 The revised ~54 incident estimate uses a one-time 53-to-54 odometer reveal when the card centre reaches the viewport centre (within 16px). A hidden centre marker controls the trigger; resizing updates the viewport band. It never accumulates on repeated scrolling, retains the approximation marker, and exposes a stable accessible value. Reduced motion disables animation. The 10M+ metric describes working with and optimizing large tables, independent of resource-plan entries.
+
+### Toolkit tag cloud
+
+The profile toolkit lists individual technologies and practices across seven areas, including REST API, SQL, OData, OOP, SOLID, Npgsql, NUnit, and MSTest. Existing architecture-map knowledge supplies the remaining entries. `ToolkitCloud.tsx` renders a responsive cloud with subtle category colors, emphasis on the established core stack, and keyboard-accessible area filters. Counts derive from the displayed data; color is supplementary to text labels. NUnit and MSTest also appear in the map test harness.
