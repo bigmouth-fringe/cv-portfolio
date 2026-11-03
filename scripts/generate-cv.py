@@ -28,8 +28,10 @@ for profile in json.loads(Path('.cv-build/profiles.json').read_text(encoding='ut
             for border in list(style.element.iter(qn('w:pBdr'))):
                 border.getparent().remove(border)
         normal = doc.styles['Normal']; normal.font.size = Pt(11)
-        normal.paragraph_format.space_after = Pt(6)
-        normal.paragraph_format.line_spacing = 1.08
+        normal.paragraph_format.space_after = Pt(5)
+        normal.paragraph_format.line_spacing = 1.04
+        doc.styles['List Bullet'].paragraph_format.space_after = Pt(3)
+        doc.styles['List Bullet'].paragraph_format.line_spacing = 1.04
         doc.styles['Title'].font.size = Pt(27)
         doc.styles['Heading 1'].font.size = Pt(17)
         doc.styles['Heading 2'].font.size = Pt(13)
@@ -66,3 +68,4 @@ for profile in json.loads(Path('.cv-build/profiles.json').read_text(encoding='ut
         out = Path('public/cv') / profile['id']; out.mkdir(parents=True, exist_ok=True)
         doc.save(out / f'{lang}.docx')
         print(out / f'{lang}.docx')
+
