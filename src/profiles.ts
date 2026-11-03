@@ -35,7 +35,6 @@ export const profiles: CVProfile[] = [{
     { label: { en: 'Frontend', ru: 'Frontend' }, skills: ['Angular', 'React', 'TypeScript', 'RxJS'] },
     { label: { en: 'Testing', ru: 'Тестирование' }, skills: ['xUnit', 'NUnit', 'MSTest', 'Moq', 'Selenium', 'Integration tests', 'Performance tests'] },
     { label: { en: 'Delivery & observability', ru: 'Доставка и наблюдаемость' }, skills: ['Git', 'Kubernetes', 'Prometheus', 'Grafana', '.NET profiling', 'GC & allocations', 'Code review', 'AI-agent workflows'] },
-    { label: { en: 'Integrations', ru: 'Интеграции' }, skills: ['Google Maps', 'Google Calendar', 'PandaDoc'] },
   ],
 }]
 
