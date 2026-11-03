@@ -40,7 +40,7 @@ The `CVProfile` TypeScript interface validates each entry's structure. All rende
 
 `src/architecture.ts` defines the interactive hexagonal technology map. All group inventories are visible; selecting a group shows its responsibility. Persistence is selected initially, with deep EF Core knowledge and working familiarity with Dapper explicitly distinguished. Delivery and Observability appear as two static, non-clickable cards at the end of the inventory. The map spans career experience and does not claim every technology ran in a single system. The ports-and-adapters boundary follows [Alistair Cockburn's original description](https://alistair.cockburn.us/hexagonal-architecture).
 
-`metrics` defines eight career highlights, including CV-backed platform scale and coordination figures. Approximately **50 complex production incidents resolved with fixes deployed** is the owner's revised career estimate. The owner describes the >3× agent-assisted pace as a comparison of actual performance across dozens of sprints; this does not claim statistical significance. P&L and storage results appear only in the Timetta work case, with detailed implementation text. No numeric feature/hotfix total is inferred from tenure.
+`metrics` defines eight career highlights, including CV-backed platform scale and coordination figures. Approximately **54 complex production incidents resolved with fixes deployed** is the owner's revised career estimate. The owner describes the >3× agent-assisted pace as a comparison of actual performance across dozens of sprints; this does not claim statistical significance. P&L and storage results appear only in the Timetta work case, with detailed implementation text. No numeric feature/hotfix total is inferred from tenure.
 
 ### Original CV coverage
 
@@ -91,4 +91,4 @@ Earlier roles now have contextual paragraphs alongside their existing bullets. A
 
 ### Metric presentation
 
-The ~50 incident estimate uses a one-time 49-to-50 odometer reveal when it enters the viewport. It never accumulates on repeated scrolling, retains the approximation marker, and exposes a stable accessible value. Reduced motion disables animation. The 10M+ metric describes working with and optimizing large tables, independent of resource-plan entries.
+The revised ~54 incident estimate uses a one-time 53-to-54 odometer reveal when the card centre reaches the viewport centre (within 16px). A hidden centre marker controls the trigger; resizing updates the viewport band. It never accumulates on repeated scrolling, retains the approximation marker, and exposes a stable accessible value. Reduced motion disables animation. The 10M+ metric describes working with and optimizing large tables, independent of resource-plan entries.
