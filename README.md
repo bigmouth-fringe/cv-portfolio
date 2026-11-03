@@ -88,3 +88,7 @@ All sixteen illustrative hook examples were formatted with CSharpier 1.3.0, usin
 `ResourcePlanDemo.tsx` compares millions of detailed RPE rows with gzip-compressed draft byte payloads and monthly aggregation on publication. Draft/Publish controls show the two stages; abstract row tiles, month cards, and a workflow explain why storage and reads improve. Approximate 10× storage reduction and minutes-to-seconds reads are combined outcomes, not an isolated gzip benchmark. P&L details separately explain removal of repeated data loads. The owner supplied this draft/publication explanation directly.
 
 Earlier roles now have contextual paragraphs alongside their existing bullets. Arcadia includes React and Angular. Kafka remains in the general toolkit but is removed from Timetta statements. The hero Get in touch / Связаться button opens Telegram; both Telegram actions use the Bootstrap Icons brand SVG under MIT (see LICENSE-bootstrap-icons.txt). Hook examples hold for 1.5 seconds instead of 4.5 seconds.
+
+### Metric presentation
+
+The ~50 incident estimate uses a one-time 49-to-50 odometer reveal when it enters the viewport. It never accumulates on repeated scrolling, retains the approximation marker, and exposes a stable accessible value. Reduced motion disables animation. The 10M+ metric describes working with and optimizing large tables, independent of resource-plan entries.
