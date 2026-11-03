@@ -95,4 +95,4 @@ The revised ~54 incident estimate uses a one-time 53-to-54 odometer reveal when 
 
 ### Toolkit tag cloud
 
-The profile toolkit lists individual technologies and practices across seven areas, including REST API, SQL, OData, OOP, SOLID, Npgsql, NUnit, and MSTest. Existing architecture-map knowledge supplies the remaining entries. `ToolkitCloud.tsx` renders a responsive cloud with subtle category colors, emphasis on the established core stack, and keyboard-accessible area filters. Counts derive from the displayed data; color is supplementary to text labels. NUnit and MSTest also appear in the map test harness.
+The profile toolkit lists individual technologies and practices across six areas, including REST API, SQL, OData, OOP, SOLID, Npgsql, NUnit, and MSTest. Existing architecture-map knowledge supplies the remaining entries. `ToolkitCloud.tsx` renders a responsive cloud with subtle category colors, emphasis on the established core stack, and keyboard-accessible area filters. Counts derive from the displayed data; color is supplementary to text labels. NUnit and MSTest also appear in the map test harness.
