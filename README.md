@@ -96,3 +96,10 @@ The revised ~54 incident estimate uses a one-time 53-to-54 odometer reveal when 
 ### Toolkit tag cloud
 
 The profile toolkit lists individual technologies and practices across six areas, including REST API, SQL, OData, OOP, SOLID, Npgsql, NUnit, and MSTest. Existing architecture-map knowledge supplies the remaining entries. `ToolkitCloud.tsx` renders a responsive cloud with subtle category colors, emphasis on the established core stack, and keyboard-accessible area filters. Counts derive from the displayed data; color is supplementary to text labels. NUnit and MSTest also appear in the map test harness.
+
+
+## CV downloads
+
+The hero's Download CV menu serves PDF and DOCX for the selected profile and language. `scripts/export-content.mjs` reads the same TypeScript registry as the website; `scripts/generate-cv.py` produces editable DOCX files. Pages CI renders each DOCX to a searchable PDF with LibreOffice, then includes both formats in the static build. Generated files live at `cv/<profile-id>/<en|ru>.<pdf|docx>` and are not committed.
+
+For local generation: `node scripts/export-content.mjs`, install `python-docx==1.2.0`, then run `python scripts/generate-cv.py`. Render PDF with LibreOffice Writer using the deployment workflow command. Install DejaVu Sans for matching typography. Downloads contain all employment bullets, profile paragraphs, toolkit, education, and public contacts; interactive demos remain available through the portfolio link. The original CV PDF and excluded private details are not used as download assets.
