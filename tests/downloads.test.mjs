@@ -11,7 +11,7 @@ test('download export includes every registered CV in both languages without pri
     for (const lang of ['en', 'ru']) {
       const cv = profile.content[lang]
       assert.equal(cv.jobs.length, 4)
-      assert.equal(cv.jobs.reduce((sum, job) => sum + job.bullets.length, 0), 21)
+      assert.equal(cv.jobs.reduce((sum, job) => sum + job.bullets.length, 0), 25)
       assert.ok(cv.aboutParagraphs.length)
       assert.ok(profile.toolkit.flatMap(group => group.skills).includes('Npgsql'))
     }
