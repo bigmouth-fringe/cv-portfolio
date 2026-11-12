@@ -20,21 +20,26 @@ for profile in json.loads(Path('.cv-build/profiles.json').read_text(encoding='ut
     for lang, t in profile['content'].items():
         doc = Document(); sec = doc.sections[0]
         sec.page_width = Inches(8.5); sec.page_height = Inches(11)
-        sec.top_margin = sec.bottom_margin = Inches(.65)
-        sec.left_margin = sec.right_margin = Inches(.72)
+        sec.top_margin = sec.bottom_margin = Inches(.62)
+        sec.left_margin = sec.right_margin = Inches(.67)
         for name in ['Normal', 'Title', 'Subtitle', 'Heading 1', 'Heading 2', 'List Bullet']:
             style = doc.styles[name]; style.font.name = 'DejaVu Sans'
             style.font.color.rgb = RGBColor(0, 0, 0)
             for border in list(style.element.iter(qn('w:pBdr'))):
                 border.getparent().remove(border)
-        normal = doc.styles['Normal']; normal.font.size = Pt(11)
+        normal = doc.styles['Normal']; normal.font.size = Pt(10.5)
         normal.paragraph_format.space_after = Pt(5)
         normal.paragraph_format.line_spacing = 1.04
         doc.styles['List Bullet'].paragraph_format.space_after = Pt(3)
         doc.styles['List Bullet'].paragraph_format.line_spacing = 1.04
-        doc.styles['Title'].font.size = Pt(27)
-        doc.styles['Heading 1'].font.size = Pt(17)
-        doc.styles['Heading 2'].font.size = Pt(13)
+        doc.styles['Title'].font.size = Pt(23)
+        doc.styles['Title'].paragraph_format.space_after = Pt(3)
+        doc.styles['Subtitle'].font.size = Pt(13)
+        doc.styles['Subtitle'].paragraph_format.space_after = Pt(4)
+        doc.styles['Heading 1'].paragraph_format.space_before = Pt(8)
+        doc.styles['Heading 2'].paragraph_format.space_before = Pt(6)
+        doc.styles['Heading 1'].font.size = Pt(14)
+        doc.styles['Heading 2'].font.size = Pt(11.5)
         footer = sec.footer.paragraphs[0]; footer.alignment = 2
         footer.add_run(t['name'] + '  |  ')
         field = OxmlElement('w:fldSimple'); field.set(qn('w:instr'), 'PAGE'); footer._p.append(field)
@@ -46,26 +51,43 @@ for profile in json.loads(Path('.cv-build/profiles.json').read_text(encoding='ut
         doc.add_paragraph(t['location'])
         p = doc.add_paragraph(); link(p, 'Telegram', profile['telegram']); p.add_run('  |  ')
         link(p, profile['email'], 'mailto:' + profile['email'])
-        p = doc.add_paragraph(); link(p, 'Portfolio', 'https://bigmouth-fringe.github.io/cv-portfolio/?cv=' + profile['id'])
+        p.add_run('  |  '); link(p, 'Portfolio' if lang == 'en' else 'Портфолио', 'https://bigmouth-fringe.github.io/cv-portfolio/?cv=' + profile['id'])
         doc.add_heading('Profile' if lang == 'en' else 'О себе', 1)
         for paragraph in t['aboutParagraphs']: doc.add_paragraph(paragraph)
         doc.add_heading(t['skills'], 1)
-        for group in profile['toolkit']:
-            p = doc.add_paragraph(); p.add_run(group['label'][lang] + ': ').bold = True
-            p.add_run(', '.join(group['skills']))
-        doc.add_heading(t['education'], 1)
-        doc.add_paragraph(t['degree']); doc.add_paragraph(t['languages'])
+        skill_lines = [
+            ('Backend', 'C#, .NET, ASP.NET Core, REST, OData, SignalR, DDD'),
+            ('Data' if lang == 'en' else 'Данные', 'PostgreSQL, SQL, EF Core, Npgsql, Redis'),
+            ('Messaging and reliability' if lang == 'en' else 'Сообщения и надёжность',
+             'RabbitMQ, MassTransit, Prometheus, Grafana, .NET profiling, xUnit, NUnit, MSTest, Moq'),
+            ('Additional' if lang == 'en' else 'Дополнительно',
+             'Angular, TypeScript, RxJS, React, Python. '
+             + ('Working familiarity: Dapper, Kafka, Kubernetes.' if lang == 'en'
+                else 'Рабочее знакомство: Dapper, Kafka, Kubernetes.')),
+        ]
+        for label, skills in skill_lines:
+            p = doc.add_paragraph()
+            p.add_run(label + ' — ').bold = True
+            p.add_run(skills)
+        doc.add_heading(t['experience'], 1)
         for i, job in enumerate(t['jobs']):
-            if i in (0, 1): doc.add_page_break()
-            if i == 0: doc.add_heading(t['experience'], 1)
             doc.add_heading(job['company'], 2)
-            p = doc.add_paragraph(); p.add_run(job['role']).bold = True
-            p.add_run('\n' + job['date'])
-            for paragraph in job['text'].split('\n\n'): doc.add_paragraph(paragraph)
-            for bullet in job['bullets']: doc.add_paragraph(bullet, 'List Bullet')
-            p = doc.add_paragraph(job['stack']); p.paragraph_format.space_after = Pt(14)
-            for r in p.runs: r.font.size = Pt(9)
+            p = doc.add_paragraph()
+            p.paragraph_format.keep_with_next = True
+            p.add_run(job['role']).bold = True
+            p.add_run('  |  ' + job['date'])
+            if i == 0:
+                doc.add_paragraph(
+                    'Project, resource, and financial management SaaS for hundreds of companies.'
+                    if lang == 'en' else
+                    'SaaS-платформа управления проектами, ресурсами и финансами для сотен компаний.'
+                ).paragraph_format.keep_with_next = True
+            for bullet in job['bullets']:
+                p = doc.add_paragraph(bullet, 'List Bullet')
+                p.paragraph_format.keep_together = True
+        doc.add_heading(t['education'], 1)
+        doc.add_paragraph(t['degree'])
+        doc.add_paragraph(t['languages'])
         out = Path('public/cv') / profile['id']; out.mkdir(parents=True, exist_ok=True)
         doc.save(out / f'{lang}.docx')
         print(out / f'{lang}.docx')
-

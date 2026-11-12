@@ -19,14 +19,14 @@ export interface CVProfile {
 
 export const profiles: CVProfile[] = [{
   id: 'senior-dotnet',
-  label: { en: 'Senior .NET / Tech Lead', ru: 'Senior .NET / Техлид' },
+  label: { en: 'Senior .NET Backend Engineer', ru: 'Senior .NET Backend Engineer' },
   initials: 'ar',
-  pageTitle: 'Senior .NET',
+  pageTitle: 'Senior .NET Backend Engineer',
   downloadName: 'Alexey_Rudi_Senior_DotNet',
   photo: 'alexey-rudi.jpg',
   description: {
-    en: 'Alexey Rudi — Senior C#/.NET Developer and hands-on Tech Lead. Enterprise systems, complex domain logic, and performance engineering.',
-    ru: 'Алексей Руди — Senior C#/.NET-разработчик и hands-on Tech Lead. Enterprise-системы, сложная бизнес-логика и оптимизация производительности.',
+    en: 'Alexey Rudi — Senior .NET Backend Engineer. Enterprise SaaS, scheduling, transactions, and PostgreSQL performance.',
+    ru: 'Алексей Руди — Senior .NET Backend Engineer. Корпоративные SaaS-системы, планирование, транзакции и производительность PostgreSQL.',
   },
   email: 'bigmouthfringe@gmail.com',
   telegram: 'https://t.me/bigmouthfringe',
