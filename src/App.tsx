@@ -51,7 +51,7 @@ export default function App(){
  useEffect(()=>{if(!copied)return;const timer=setTimeout(()=>setCopied(false),2000);return()=>clearTimeout(timer)},[copied])
  async function copy(){try{await navigator.clipboard.writeText(profile.email);setCopied(true)}catch{window.location.href=emailHref}}
  const icons=[GitBranch,Layers,Database]
- const featuredKinds = ['gantt', 'undo', 'resource-plan', 'sdk']
+ const featuredKinds = ['gantt', 'undo', 'sdk']
  const matching = t.cases.filter(c => filter === 'All' || filter === c.category)
  const featured = featuredKinds.flatMap(kind => matching.filter(c => c.demo === kind))
  const additional = matching.filter(c => !featuredKinds.includes(c.demo))
