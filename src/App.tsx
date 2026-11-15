@@ -65,7 +65,11 @@ export default function App(){
    <summary>{lang === 'en' ? 'More engineering work' : 'Другие инженерные задачи'} · {additional.length}</summary>
    <div className="case-list">{additional.map(renderCase)}</div>
  </details>}</section>
- <section id="experience" className="section"><div className="section-kicker">02 / {t.nav[1]}</div><h2>{t.experience}</h2><div className="timeline">{t.jobs.map((job,i)=><article className="job" key={job.company}><div className="job-date"><span className="timeline-dot"/>{job.date}</div><div><div className="job-heading"><h3>{job.company}</h3><span className="job-number">0{i+1}</span></div><h4>{job.role}</h4><>{job.text && job.text.split('\n\n').map(paragraph=><p key={paragraph}>{paragraph}</p>)}<ul className="job-bullets">{job.bullets.slice(0, i === 0 ? 4 : 2).map(bullet => <li key={bullet}>{bullet}</li>)}</ul>
+ <section id="experience" className="section"><div className="section-kicker">02 / {t.nav[1]}</div><h2>{t.experience}</h2><div className="timeline">{t.jobs.map((job,i)=><article className="job" key={job.company}><div className="job-date"><span className="timeline-dot"/>{job.date}</div><div><div className="job-heading"><h3>{job.company}</h3><span className="job-number">0{i+1}</span></div>{job.roles ? <div className="job-roles">
+ {job.roles.map(role => <div className="job-role" key={role.role}>
+  <h4>{role.role}</h4><span>{role.date}</span>
+ </div>)}
+ </div> : <h4>{job.role}</h4>}<>{job.text && job.text.split('\n\n').map(paragraph=><p key={paragraph}>{paragraph}</p>)}<ul className="job-bullets">{job.bullets.slice(0, i === 0 ? 4 : 2).map(bullet => <li key={bullet}>{bullet}</li>)}</ul>
  {job.bullets.length > (i === 0 ? 4 : 2) && <details className="job-more">
    <summary>{lang === 'en' ? 'More contributions' : 'Другие результаты работы'}</summary>
    <ul className="job-bullets">{job.bullets.slice(i === 0 ? 4 : 2).map(bullet => <li key={bullet}>{bullet}</li>)}</ul>

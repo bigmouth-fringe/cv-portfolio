@@ -72,10 +72,11 @@ for profile in json.loads(Path('.cv-build/profiles.json').read_text(encoding='ut
         doc.add_heading(t['experience'], 1)
         for i, job in enumerate(t['jobs']):
             doc.add_heading(job['company'], 2)
-            p = doc.add_paragraph()
-            p.paragraph_format.keep_with_next = True
-            p.add_run(job['role']).bold = True
-            p.add_run('  |  ' + job['date'])
+            for position in job.get('roles', [job]):
+                p = doc.add_paragraph()
+                p.paragraph_format.keep_with_next = True
+                p.add_run(position['role']).bold = True
+                p.add_run('  |  ' + position['date'])
             if i == 0:
                 doc.add_paragraph(
                     'Project, resource, and financial management SaaS for hundreds of companies.'
